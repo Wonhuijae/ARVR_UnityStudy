@@ -20,14 +20,15 @@ public class BulletSpawner : MonoBehaviour
         target = FindObjectOfType<PlayerController>().transform;
         //<>타입의 컴포넌트를 가진 게임오브젝트를 찾는 메서드, 플레이어 위치 추적
     }
-
+     
     // Update is called once per frame
     void Update()
     {
         timeAfterSpawn += Time.deltaTime;
         //최종적으로 총알을 만든 이후 지난 시간, 흐른 시간이 누적되어 기록됨
+        transform.LookAt(target);
 
-        if(timeAfterSpawn > spawnRate)
+        if (timeAfterSpawn > spawnRate)
         {
             timeAfterSpawn = 0f; //스폰 누적시간 리셋
             //탄환 오브젝트 생성, 탄환 생성기의 위치와 회전정보로 생성

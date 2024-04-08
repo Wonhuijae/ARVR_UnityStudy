@@ -61,5 +61,8 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
     {
         //gameObject: 스크립트가 소속된 오브젝트, 따로 선언 필요 없음
         gameObject.SetActive(false);
+
+        GameManager gm = FindObjectOfType<GameManager>();
+        gm.EndGame();
     }
 }
