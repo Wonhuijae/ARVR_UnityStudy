@@ -4,27 +4,33 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject gameoverText;
     public Text timeText;
     public Text recordText;
+    public GameObject door;
 
     private float surviveTime;
     private bool isGameover; //private 생략 가능
+    private bool isStageclear;
+    private int isSlimedie = 0;
+    static int currentStage = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         surviveTime = 0;
         isGameover = false;
+        isStageclear = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isGameover)
+        if(!isGameover && !isStageclear)
         {
             surviveTime += Time.deltaTime; //시간 누적. Time.deltaTime: 프레임과 프레임 사이에 걸린 시간
             timeText.text = "Time: " + (int)surviveTime;
@@ -34,8 +40,17 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene("SampleScene");
+                SceneManager.LoadScene(1);
             }
+        }
+    }
+
+    public void Slimedie()
+    {
+        isSlimedie--;
+        if(isSlimedie == 0)
+        {
+            door.GetComponent<DoorController>().Open();
         }
     }
 
@@ -55,5 +70,22 @@ public class GameManager : MonoBehaviour
         }
 
         recordText.text = "Best Time: " + (int)bestTime;
+    }
+
+    public void ClearGame()
+    {
+        isStageclear = true;
+        currentStage++;
+        //print(currentStage);
+
+        if (currentStage == 4)
+        {
+            SceneManager.LoadScene(currentStage);
+        }
+        else if (GameObject.FindWithTag("BulletSP")==null)
+        { 
+           SceneManager.LoadScene(currentStage, LoadSceneMode.Single);
+           isStageclear=false;
+        }
     }
 }

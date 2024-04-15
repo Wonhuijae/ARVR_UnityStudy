@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class Bullet : MonoBehaviour //클래스 이름->대문자
 {
     public float speed = 8f;
     Rigidbody rb;
+
+    public Slider HPSlider;
+    public int maxHealth = FindObjectOfType<PlayerController>().playerHP;
+    public int curHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +32,15 @@ public class Bullet : MonoBehaviour //클래스 이름->대문자
         
     }
 
+
+    public void checkHP()
+    {
+        if (HPSlider != null)
+        {
+            HPSlider.value = curHealth / maxHealth;
+        }
+    }
+
     private void OnTriggerEnter(Collider other) //on~: 수동 호출x, 상황이 맞으면 자동으로 호출 
     {
         //Colider 타입: 충돌된 다른 객체의 정보
@@ -36,7 +51,13 @@ public class Bullet : MonoBehaviour //클래스 이름->대문자
             //pc가 유효한 변수인지 확인. valid cheak, 유효성 체크
             if (pc != null) 
             {
-                pc.Die();
+                curHealth--;
+
+
+                if(curHealth == 0)
+                {
+                    pc.Die();
+                }
             }
         }
     }

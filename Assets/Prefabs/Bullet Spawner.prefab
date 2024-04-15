@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5452516959805109134}
   m_Layer: 0
   m_Name: Bullet Spawner
-  m_TagString: Untagged
+  m_TagString: BulletSP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,9 +121,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2820b6d0e78bc484c84db45637758101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6416663407318147079, guid: 106c610b5aa4f5248849889679959bf9, type: 3}
+  normalSlime: {fileID: 6416663407318147079, guid: 106c610b5aa4f5248849889679959bf9, type: 3}
+  rablitSlime: {fileID: 2597794160527873101, guid: b9b59d875e51afc4eb4597cd90ff27e8, type: 3}
+  vikingSlime: {fileID: 8210833794763274671, guid: fce6e69606b8722429fd3195a9321195, type: 3}
+  catSlime: {fileID: 8405492878809698205, guid: 109fee3fa61766541bc23fd1aad4671c, type: 3}
+  leafSlime: {fileID: 566961861358915312, guid: cd582d619743fa247905944ae585fd10, type: 3}
   rateMin: 0.5
   rateMax: 3
+  spawnCount: 5
 --- !u!1001 &6111293314997140482
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
     public Rigidbody playerRigidbody;
     public float speed = 8f; //float 타입 강조, C#에서는 해주는 것이 표준   
 
+    public int playerHP = 3;
+
     // Start is called before the first frame update
     void Start() //처음 한 번 실행
     {
