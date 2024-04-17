@@ -11,12 +11,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameoverText;
     public Text timeText;
     public Text recordText;
-    public GameObject door;
 
     private float surviveTime;
     private bool isGameover; //private 생략 가능
     private bool isStageclear;
-    private int isSlimedie = 0;
     static int currentStage = 1;
 
     // Start is called before the first frame update
@@ -47,11 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void Slimedie()
     {
-        isSlimedie--;
-        if(isSlimedie == 0)
-        {
-            door.GetComponent<DoorController>().Open();
-        }
+        
     }
 
     public void EndGame()
@@ -60,16 +54,16 @@ public class GameManager : MonoBehaviour
 
         gameoverText.SetActive(true);
 
-        float bestTime = PlayerPrefs.GetFloat("BestTime");
-        // PlayerPrefs에서 BestTime을 키로 하는 value를 가져와 bestTime 변수에 저장
+        int bestRecord = PlayerPrefs.GetInt("BestRecord");
+        // PlayerPrefs에서 bestRecord를 키로 하는 value를 가져와 bestRecord 변수에 저장
 
-        if (surviveTime > bestTime)
+        if (currentStage > bestRecord)
         {
-            bestTime = surviveTime;
-            PlayerPrefs.SetFloat("BestTime", bestTime);
+            bestRecord = currentStage;
+            PlayerPrefs.SetInt("BestRecord", bestRecord);
         }
 
-        recordText.text = "Best Time: " + (int)bestTime;
+        recordText.text = "Best Record: " + bestRecord + " Stage";
     }
 
     public void ClearGame()
@@ -87,5 +81,15 @@ public class GameManager : MonoBehaviour
            SceneManager.LoadScene(currentStage, LoadSceneMode.Single);
            isStageclear=false;
         }
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void GotoTitle()
+    {
+        SceneManager.LoadScene(0);
     }
 }

@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class ClearController : MonoBehaviour
 {
+    public GameObject door;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (FindObjectOfType<BulletSpawner>() == null)
+        {
+
+            door.GetComponent<DoorController>().Open();
+        }
     }
 
     private void OnTriggerEnter(Collider other) //on~: 수동 호출x, 상황이 맞으면 자동으로 호출 
@@ -21,8 +27,11 @@ public class ClearController : MonoBehaviour
         //Colider 타입: 충돌된 다른 객체의 정보
         if (other.tag == "Player")
         {
-            GameManager gm = FindObjectOfType<GameManager>();
-            gm.ClearGame();
+            if(FindObjectOfType<BulletSpawner>() == null)
+            {
+                GameManager gm = FindObjectOfType<GameManager>();
+                gm.ClearGame();
+            }
         }
     }
 }
