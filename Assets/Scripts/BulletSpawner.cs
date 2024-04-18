@@ -58,15 +58,13 @@ public class BulletSpawner : MonoBehaviour
                     makeBullet(leafSlime); break;
             }
             spawnCount--;
+        }
 
-            if (spawnCount == 0)
-            {
-                GameManager gm = FindObjectOfType<GameManager>();
-                gm.Slimedie();
-                gameObject.SetActive(false);
-            }
-
-
+        if (spawnCount == 0)
+        {
+            GameManager gm = FindObjectOfType<GameManager>();
+            gm.Slimedie();
+            gameObject.SetActive(false);
         }
     }
 

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
     public AudioClip sound1;
     public AudioClip sound2;
 
-    public AudioSource audio;
+    public AudioSource audioS;
 
     // Start is called before the first frame update
     void Start() //처음 한 번 실행
@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
         gameObject.SetActive(false);
 
         GameManager gm = FindObjectOfType<GameManager>();
+        GameObject am = GameObject.Find("AudioManager");
+        am.GetComponent<AudioManager>().PlayerDie();
         gm.EndGame();
     }
 
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
         //Colider 타입: 충돌된 다른 객체의 정보
         if (other.tag == "bullet")
         {
-            audio.PlayOneShot(sound1);
+            audioS.PlayOneShot(sound1);
             Instantiate(effect, transform.position, Quaternion.identity);
 
             /*스크립트 파일도 컴포넌트이다. 컴포넌트를 가져와서 pc라는 변수에 저장
@@ -109,7 +111,8 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
 
             if (curHealth == 0)
             {
-                audio.PlayOneShot(sound2);
+                audioS.PlayOneShot(sound2);
+
                 Die();
             }
             
@@ -123,5 +126,10 @@ public class PlayerController : MonoBehaviour //: (부모 클래스 이름) -> 상속
         {
             HPSlider.value = (float)curHealth / maxHealth;
         }
+    }
+
+    public void HPreset()
+    {
+        curHealth = 3;
     }
 }

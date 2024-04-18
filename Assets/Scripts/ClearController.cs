@@ -6,6 +6,9 @@ public class ClearController : MonoBehaviour
 {
     public GameObject door;
 
+    public AudioClip open;
+    public AudioSource doorSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,11 +18,7 @@ public class ClearController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<BulletSpawner>() == null)
-        {
-
-            door.GetComponent<DoorController>().Open();
-        }
+ 
     }
 
     private void OnTriggerEnter(Collider other) //on~: 수동 호출x, 상황이 맞으면 자동으로 호출 

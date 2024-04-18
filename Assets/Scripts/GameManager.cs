@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+
     public GameObject gameoverText;
     public Text timeText;
     public Text recordText;
@@ -15,14 +16,21 @@ public class GameManager : MonoBehaviour
     private float surviveTime;
     private bool isGameover; //private 생략 가능
     private bool isStageclear;
-    static int currentStage = 1;
+    
+    public GameObject door;
+
+    int spCnt;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject[] sp = GameObject.FindGameObjectsWithTag("BulletSP");
+        spCnt = sp.Length;
+
         surviveTime = 0;
         isGameover = false;
         isStageclear = false;
+
     }
 
     // Update is called once per frame
@@ -45,13 +53,19 @@ public class GameManager : MonoBehaviour
 
     public void Slimedie()
     {
-        
+        spCnt--;
+        if(spCnt==0)
+        {
+            door.GetComponent<DoorController>().Open();
+            GameObject am = GameObject.Find("AudioManager");
+            am.GetComponent<AudioManager>().DoorOpen();
+        }
     }
 
     public void EndGame()
     {
         isGameover = true;
-
+        int currentStage = SceneManager.GetActiveScene().buildIndex;
         gameoverText.SetActive(true);
 
         int bestRecord = PlayerPrefs.GetInt("BestRecord");
@@ -63,14 +77,23 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("BestRecord", bestRecord);
         }
 
-        recordText.text = "Best Record: " + bestRecord + " Stage";
+        if (bestRecord == 4)
+        {
+            recordText.text = "Best Record: CLEAR!";
+        }
+        else
+        {
+            recordText.text = "Best Record: " + bestRecord + " Stage";
+        }
     }
 
     public void ClearGame()
     {
         isStageclear = true;
+        int currentStage = SceneManager.GetActiveScene().buildIndex;
         currentStage++;
-        //print(currentStage);
+       
+        FindObjectOfType<PlayerController>().HPreset();
 
         if (currentStage == 4)
         {
@@ -91,5 +114,10 @@ public class GameManager : MonoBehaviour
     public void GotoTitle()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
